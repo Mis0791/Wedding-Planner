@@ -1,0 +1,57 @@
+@{
+    ViewData["Title"] = "Wedding Planner";
+}
+
+<a href="/logout">Logout</a>
+
+<h1>Welcome to the Wedding Planner</h1>
+<div>
+    <br>
+    <table>
+        <thead>
+            <tr> 
+                <td>Wedding</td>
+                <td>Date</td>
+                <td>Guests</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+        <tbody>
+        @model List<WeddingPlanner.Models.Wedding>
+            @foreach (var w in Model){
+            <tr>
+                <td><a href="wedding/@w.WeddingId">@w.Wedder1 & @w.Wedder2</a></td>
+                <td>@w.Date.ToString("MMMM d yyyy")</td>
+                <td>@w.UserWedding.Count</td>
+                @if(w.CreatedBy == ViewBag.UserInfo.UserId){
+                <td>
+                    <form action="delete" method="POST">
+                        <input type="hidden" name="WeddingId" value="@w.WeddingId">
+                        <button type="submit" name="delete">Delete</button>
+                    </form>
+                </td>
+                } else{
+                    if(w.UserWedding.Where(u => u.UserId == ViewBag.UserInfo.UserId).SingleOrDefault() == null)
+                        {
+                            <td>
+                                <form action="rsvp" method="POST">
+                                    <input type="hidden" name="WeddingId" value="@w.WeddingId">
+                                    <button type="submit" name="rsvp">RSVP</button>
+                                </form>
+                            </td>
+                        } else {
+                            <td>
+                                <form action="unrsvp" method="POST">
+                                    <input type="hidden" name="WeddingId" value="@w.WeddingId">
+                                    <button type="submit" name="rsvpid">Un-RSVP</button>
+                                </form>
+                            </td>
+                        }
+                }
+            </tr>
+            }
+        </tbody>
+    </table>
+    <br>
+    <a href="newwedding"><button>New Wedding</button></a>
+</div>

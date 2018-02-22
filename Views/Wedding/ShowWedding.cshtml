@@ -1,0 +1,14 @@
+@{
+    ViewData["Title"] = "Wedding Planner";
+}
+<a href="/dashboard">Dashboard</a> || <a href="/logout">Logout</a>
+<br>
+    <h1>@ViewBag.wedding.Wedder1 & @ViewBag.wedding.Wedder2's Wedding</h1><br>
+        <h4>@ViewBag.wedding.Date.ToString("MMM d yyyy")</h4><br>
+        <p>Guests:</p>
+        @foreach(var g in ViewBag.wedding.UserWedding){
+            <p>@g.User.FirstName @g.User.LastName</p>
+        }
+        <iframe width="600" height="450" frameborder="2" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAWlfbrhFaZTt3SJWEu1umU18S6ibOWNTI
+                &q=@ViewBag.wedding.Address" allowfullscreen>
+        </iframe>
